@@ -4,7 +4,7 @@ import cookieParser from "cookie-parser";
 import cors from 'cors'; //para poder hacer puts, y tal desde el cliente al servidor
 import authRoutes from './routes/authRoutes.js';
 import userRoutes from './routes/userRoutes.js';
-import bookRoutes from './routes/bookRoutes.js';
+
 import testRoutes from './routes/testRoutes.js';
 import { testConnection } from './db.js';
 import dotenv from 'dotenv';
@@ -34,7 +34,7 @@ await insertInitialUserData();
 // Configurar rutas
 app.use('/auth', authRoutes);
 app.use('/user', userRoutes);
-app.use('/book', bookRoutes);
+
 
 app.use('/test', testRoutes);
 
