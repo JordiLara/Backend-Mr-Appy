@@ -27,7 +27,7 @@ const User = sequelize.define(
     },
     roles: {
       type: DataTypes.STRING(30),
-      allowNull: false,
+      allowNull: true,
       get() {
         const rawValue = this.getDataValue("roles");
         if (!rawValue) {
