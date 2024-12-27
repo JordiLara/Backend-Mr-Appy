@@ -40,6 +40,10 @@ const User = sequelize.define(
         this.setDataValue("roles", value.join(","));
       },
     },
+    employeeRole: {
+      type: DataTypes.STRING(50),
+      allowNull: false,
+    },
     photo: {
       type: DataTypes.STRING(30),
       allowNull: true,

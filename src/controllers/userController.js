@@ -11,6 +11,7 @@ export const getUser = async (req, res) => {
       surname: req.user.surname,
       photo: req.user.photo,
       roles: req.user.roles,
+      employeeRole:req.user.employeeRole,
       created_at: req.user.created_at,
       updated_at: req.user.updated_at,
     };
@@ -19,7 +20,7 @@ export const getUser = async (req, res) => {
     res.status(200).json({
       code: 1,
       message: "User Detail",
-      data: user_data,
+      user: user_data,
     });
   } catch (error) {
     console.error(error);

@@ -20,7 +20,7 @@ export const register = async (req, res) => {
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const { email, password, name, surname } = req.body;
+    const { email, password, name, surname, employeeRole } = req.body;
     // Verificar si ya existe un usuario con el mismo correo electrónico
     const existingUser = await User.findOne({ where: { email } });
     if (existingUser) {
@@ -39,6 +39,7 @@ export const register = async (req, res) => {
       password: hashedPassword,
       name,
       surname,
+      employeeRole,
       status: 1,
     });
     await newUser.save();
