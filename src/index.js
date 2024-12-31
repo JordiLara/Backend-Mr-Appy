@@ -7,7 +7,7 @@ import userRoutes from "./routes/userRoutes.js";
 import testRoutes from "./routes/testRoutes.js";
 import { testConnection } from "./db.js";
 import dotenv from "dotenv";
-import { insertInitialUserData } from "./start_data.js";
+
 dotenv.config();
 
 const app = express();
@@ -30,7 +30,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true })); // Para analizar datos de formularios en el cuerpo de la solicitud
 
 await testConnection();
-await insertInitialUserData();
 
 // Configurar rutas
 app.use("/auth", authRoutes);

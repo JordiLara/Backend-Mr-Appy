@@ -2,6 +2,7 @@ import bcrypt from "bcrypt";
 import crypto from "crypto";
 import jwt from "jsonwebtoken";
 import User from "../models/userModel.js";
+import Team from "../models/teamModel.js";
 import RecoveryToken from "../models/recoveryTokenModel.js";
 import sendEmail from "../utils/email/sendEmail.js";
 import { validationResult } from "express-validator";
@@ -20,7 +21,7 @@ export const register = async (req, res) => {
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const { email, password, name, surname, employeeRole } = req.body;
+    const { email, password, name, surname, employeeRole, companyName, teamName } = req.body;
     // Verificar si ya existe un usuario con el mismo correo electrónico
     const existingUser = await User.findOne({ where: { email } });
     if (existingUser) {
@@ -43,6 +44,13 @@ export const register = async (req, res) => {
       status: 1,
     });
     await newUser.save();
+
+    const newTeam = new Team({
+      id_user_manager: newUser.id_user,
+      company_name: companyName,
+      team_name: teamName,
+    });
+    await newTeam.save();
 
     // Generar un token de acceso y lo guardo en un token seguro (httpOnly)
     const accessToken = jwt.sign(
