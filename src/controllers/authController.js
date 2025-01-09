@@ -21,7 +21,15 @@ export const register = async (req, res) => {
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const { email, password, name, surname, employeeRole, companyName, teamName } = req.body;
+    const {
+      email,
+      password,
+      name,
+      surname,
+      employeeRole,
+      companyName,
+      teamName,
+    } = req.body;
     // Verificar si ya existe un usuario con el mismo correo electrónico
     const existingUser = await User.findOne({ where: { email } });
     if (existingUser) {
@@ -43,14 +51,17 @@ export const register = async (req, res) => {
       employeeRole,
       status: 1,
     });
-    await newUser.save();
+    let createdUser = await newUser.save();
 
     const newTeam = new Team({
-      id_user_manager: newUser.id_user,
+      id_user_manager: createdUser.id_user,
       company_name: companyName,
       team_name: teamName,
     });
-    await newTeam.save();
+    const createdTeam = await newTeam.save();
+
+    createdUser.id_team = createdTeam.id_team;
+    await createdUser.save();
 
     // Generar un token de acceso y lo guardo en un token seguro (httpOnly)
     const accessToken = jwt.sign(
