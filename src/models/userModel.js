@@ -47,10 +47,6 @@ const User = sequelize.define(
     id_team: {
       type: DataTypes.INTEGER.UNSIGNED,
       allowNull: true,
-      references: {
-        model: Team,
-        key: "id_team",
-      },
     },
     photo: {
       type: DataTypes.STRING(30),

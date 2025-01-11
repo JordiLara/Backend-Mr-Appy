@@ -50,6 +50,7 @@ export const register = async (req, res) => {
       surname,
       employeeRole,
       status: 1,
+      roles: "manager"
     });
     let createdUser = await newUser.save();
 
