@@ -5,6 +5,7 @@ import cors from "cors"; //para poder hacer puts, y tal desde el cliente al serv
 import authRoutes from "./routes/authRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 import testRoutes from "./routes/testRoutes.js";
+import reviewRoutes from "./models/reviewRoutes.js";
 import { testConnection } from "./db.js";
 import dotenv from "dotenv";
 
@@ -38,7 +39,7 @@ await testConnection();
 // Configurar rutas
 app.use("/auth", authRoutes);
 app.use("/user", userRoutes);
-
+app.use("/review", reviewRoutes);
 app.use("/test", testRoutes);
 
 // Iniciar el servidor
