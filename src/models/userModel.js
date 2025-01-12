@@ -26,19 +26,8 @@ const User = sequelize.define(
       allowNull: true,
     },
     roles: {
-      type: DataTypes.STRING(30),
-      allowNull: true,
-      get() {
-        const rawValue = this.getDataValue("roles");
-        if (!rawValue) {
-          console.log("Valor de roles es undefined o null");
-          return [];
-        }
-        return rawValue.split(",");
-      },
-      set(value) {
-        this.setDataValue("roles", value.join(","));
-      },
+      type: DataTypes.STRING(50),
+      allowNull: false,
     },
     employeeRole: {
       type: DataTypes.STRING(50),

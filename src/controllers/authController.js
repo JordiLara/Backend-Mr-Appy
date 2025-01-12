@@ -29,7 +29,9 @@ export const register = async (req, res) => {
       employeeRole,
       companyName,
       teamName,
+      teamId,
     } = req.body;
+
     // Verificar si ya existe un usuario con el mismo correo electrónico
     const existingUser = await User.findOne({ where: { email } });
     if (existingUser) {
@@ -38,11 +40,24 @@ export const register = async (req, res) => {
         message: "Ya existe un usuario con el mismo correo electrónico",
       });
     }
+
+    // Si es un empleado, verificar que el equipo existe antes de crear el usuario
+    if (teamId) {
+      const existingTeam = await Team.findOne({ where: { id_team: teamId } });
+      if (!existingTeam) {
+        return res.status(404).json({
+          code: -3,
+          message: "El equipo especificado no existe",
+        });
+      }
+    }
+
     // Crear un nuevo usuario
     const hashedPassword = await bcrypt.hash(
       password,
       Number(process.env.BCRYPT_SALT)
     );
+
     const newUser = new User({
       email,
       password: hashedPassword,
@@ -50,18 +65,26 @@ export const register = async (req, res) => {
       surname,
       employeeRole,
       status: 1,
-      roles: "manager"
+      roles: teamId ? "user" : "manager",
     });
+
     let createdUser = await newUser.save();
 
-    const newTeam = new Team({
-      id_user_manager: createdUser.id_user,
-      company_name: companyName,
-      team_name: teamName,
-    });
-    const createdTeam = await newTeam.save();
+    // Si es un empleado uniéndose a un equipo existente
+    if (teamId) {
+      createdUser.id_team = teamId;
+    }
+    // Si es un manager creando un nuevo equipo
+    else {
+      const newTeam = new Team({
+        id_user_manager: createdUser.id_user,
+        company_name: companyName,
+        team_name: teamName,
+      });
+      const createdTeam = await newTeam.save();
+      createdUser.id_team = createdTeam.id_team;
+    }
 
-    createdUser.id_team = createdTeam.id_team;
     await createdUser.save();
 
     // Generar un token de acceso y lo guardo en un token seguro (httpOnly)
