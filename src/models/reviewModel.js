@@ -3,15 +3,15 @@ import { sequelize } from "../db.js";
 import Team from "./teamModel.js";
 import User from "./userModel.js";
 
-const Review = sequelize.define(
-  "Review",
+const Mood = sequelize.define(
+  "Mood",
   {
     id: {
       type: DataTypes.INTEGER.UNSIGNED,
       primaryKey: true,
       autoIncrement: true,
     },
-    mood_id: {
+    id_mood: {
       type: DataTypes.INTEGER.UNSIGNED,
       allowNull: false,
       references: {
@@ -19,7 +19,7 @@ const Review = sequelize.define(
         key: "id",
       },
     },
-    user_id: {
+    id_user: {
       type: DataTypes.INTEGER.UNSIGNED,
       allowNull: false,
       references: {
@@ -27,7 +27,7 @@ const Review = sequelize.define(
         key: "id_user",
       },
     },
-    team_id: {
+    id_team: {
       type: DataTypes.INTEGER.UNSIGNED,
       allowNull: false,
       references: {
@@ -65,11 +65,11 @@ const Review = sequelize.define(
   }
 );
 
-Team.hasMany(Review, { foreignKey: "team_id" });
-Review.belongsTo(Team, { foreignKey: "team_id" });
+Team.hasMany(Mood, { foreignKey: "id_team" });
+Mood.belongsTo(Team, { foreignKey: "id_team" });
 
-User.hasMany(Review, { foreignKey: "user_id" });
-Review.belongsTo(User, { foreignKey: "user_id" });
+User.hasMany(Mood, { foreignKey: "id_user" });
+Mood.belongsTo(User, { foreignKey: "id_user" });
 
 // Tabla para los likes
 const ReviewLike = sequelize.define(
@@ -80,7 +80,7 @@ const ReviewLike = sequelize.define(
       primaryKey: true,
       autoIncrement: true,
     },
-    review_id: {
+    id_review: {
       type: DataTypes.INTEGER.UNSIGNED,
       allowNull: false,
       references: {
@@ -88,7 +88,7 @@ const ReviewLike = sequelize.define(
         key: "id",
       },
     },
-    user_id: {
+    id_user: {
       type: DataTypes.INTEGER.UNSIGNED,
       allowNull: false,
       references: {
@@ -107,18 +107,18 @@ const ReviewLike = sequelize.define(
 );
 
 // Relación muchos a muchos para los likes
-Review.belongsToMany(User, {
+Mood.belongsToMany(User, {
   through: ReviewLike,
-  foreignKey: "review_id",
-  otherKey: "user_id",
+  foreignKey: "id_review",
+  otherKey: "id_user",
   as: "likedBy",
 });
 
-User.belongsToMany(Review, {
+User.belongsToMany(Mood, {
   through: ReviewLike,
-  foreignKey: "user_id",
-  otherKey: "review_id",
+  foreignKey: "id_user",
+  otherKey: "id_review",
   as: "likedReviews",
 });
 
-export default Review;
+export default Mood;
