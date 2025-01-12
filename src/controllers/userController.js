@@ -6,12 +6,13 @@ export const getUser = async (req, res) => {
   try {
     const user_data = {
       id_user: req.user.id_user,
+      id_team: req.user.id_team,
       email: req.user.email,
       name: req.user.name,
       surname: req.user.surname,
       photo: req.user.photo,
       roles: req.user.roles,
-      employeeRole:req.user.employeeRole,
+      employeeRole: req.user.employeeRole,
       created_at: req.user.created_at,
       updated_at: req.user.updated_at,
     };

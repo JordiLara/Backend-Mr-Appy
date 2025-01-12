@@ -2,7 +2,7 @@ import Review from "../models/reviewModel.js";
 
 export const getReviews = async (req, res) => {
   try {
-    const reviews = Review.findAll({
+    const reviews = await Review.findAll({
       where: {
         id_user: req.user.id_user,
       },
@@ -26,17 +26,13 @@ export const getReviews = async (req, res) => {
 
 export const createReview = async (req, res) => {
   try {
-    const errors = validationResult(req);
-
-    // Si hay errores de validación, responde con un estado 400 Bad Request
-    if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
-    }
+    // @To_Do añadir validación de datos
 
     const { mood, content, isAnonymous } = req.body;
 
     const newReview = new Review({
       id_user: req.user.id_user,
+      id_team: req.user.id_team,
       mood,
       content,
       is_anonymous: isAnonymous,

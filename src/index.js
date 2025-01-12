@@ -5,7 +5,7 @@ import cors from "cors"; //para poder hacer puts, y tal desde el cliente al serv
 import authRoutes from "./routes/authRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 import testRoutes from "./routes/testRoutes.js";
-import reviewRoutes from "./models/reviewRoutes.js";
+import reviewRoutes from "./routes/reviewRoutes.js";
 import { testConnection } from "./db.js";
 import dotenv from "dotenv";
 
