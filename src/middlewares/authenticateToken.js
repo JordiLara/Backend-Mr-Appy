@@ -23,16 +23,6 @@ export const authenticateToken = (allowedRoles) => async (req, res, next) => {
       });
     }
 
-    const hasPermission = user.roles.some((role) =>
-      allowedRoles.includes(role)
-    );
-    if (!hasPermission) {
-      return res.status(403).json({
-        code: -10,
-        message: "No tiene los permisos necesarios.",
-      });
-    }
-
     req.user = user;
     next();
   } catch (error) {

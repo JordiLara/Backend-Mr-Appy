@@ -105,6 +105,7 @@ export const register = async (req, res) => {
     res.status(200).json({
       code: 1,
       message: "Usuario registrado correctamente",
+      token: token
     });
   } catch (error) {
     console.error(error);
@@ -162,6 +163,7 @@ export const login = async (req, res) => {
     res.status(200).json({
       code: 1,
       message: "Login OK",
+      token: token,
       data: {
         user: {
           name: user.name,
