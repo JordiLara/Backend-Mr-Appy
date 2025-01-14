@@ -329,19 +329,17 @@ export const changePassword = async (req, res) => {
 };
 
 export const logout = async (req, res) => {
-  const { cookies } = req;
-  const jwt = cookies.token;
-
-  const token = serialize("token", null, {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    sameSite: "none",
-    maxAge: -1,
-    path: "/",
-  });
-  res.setHeader("Set-Cookie", token);
-  res.status(200).json({
-    code: 0,
-    message: "Logged out - Delete Token",
-  });
+  
+  res
+    .cookie("token", null, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "none",
+      maxAge: -1,
+    })
+    .status(200)
+    .json({
+      code: 0,
+      message: "Logged out - Delete Token"
+    });
 };
