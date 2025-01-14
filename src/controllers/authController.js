@@ -92,21 +92,28 @@ export const register = async (req, res) => {
       { id_user: newUser.id_user, name: newUser.name },
       process.env.JWT_SECRET
     );
-    const token = serialize("token", accessToken, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "strict",
-      maxAge: 60 * 60 * 24 * 30,
-      path: "/",
-    });
-    res.setHeader("Set-Cookie", token);
+    //res.setHeader("Set-Cookie", token);
+    res
+      .cookie("token", accessToken, {
+        httpOnly: true,
+        secure: true,
+        sameSite: "none",
+        maxAge: 60 * 60 * 24 * 30,
+      })
+      .status(200)
+      .json({
+        code: 1,
+        message: "Usuario registrado correctamente",
+        token: accessToken,
+        user: createdUser,
+      });
 
     // Enviar una respuesta al cliente
-    res.status(200).json({
-      code: 1,
-      message: "Usuario registrado correctamente",
-      token: token
-    });
+    // res.status(200).json({
+    //   code: 1,
+    //   message: "Usuario registrado correctamente",
+    //   token: token,
+    // });
   } catch (error) {
     console.error(error);
     res.status(500).json({
@@ -147,31 +154,24 @@ export const login = async (req, res) => {
 
     // Generar un token de acceso y lo guardo en un token seguro (httpOnly)
     const accessToken = jwt.sign(
-      { id_user: user.id_user, name: user.name, roles: user.roles },
+      { id_user: user.id_user, name: user.name },
       process.env.JWT_SECRET
     );
-    const token = serialize("token", accessToken, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "lax",
-      maxAge: 60 * 60 * 24 * 30,
-      path: "/",
-    });
-    res.setHeader("Set-Cookie", token);
-
-    // Enviar una respuesta al cliente
-    res.status(200).json({
-      code: 1,
-      message: "Login OK",
-      token: token,
-      data: {
-        user: {
-          name: user.name,
-          surname: user.surname,
-          email: user.email,
-        },
-      },
-    });
+    //res.setHeader("Set-Cookie", token);
+    res
+      .cookie("token", accessToken, {
+        httpOnly: true,
+        secure: true,
+        sameSite: "none",
+        maxAge: 60 * 60 * 24 * 30,
+      })
+      .status(200)
+      .json({
+        code: 1,
+        message: "Usuario identificado correctamente",
+        token: accessToken,
+        user: user,
+      });
   } catch (error) {
     console.error(error);
     res.status(500).json({
@@ -300,7 +300,7 @@ export const changePassword = async (req, res) => {
     const token_jwt = serialize("token", accessToken, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
-      sameSite: "strict",
+      sameSite: "none",
       maxAge: 60 * 60 * 24 * 30,
       path: "/",
     });
@@ -335,7 +335,7 @@ export const logout = async (req, res) => {
   const token = serialize("token", null, {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
-    sameSite: "strict",
+    sameSite: "none",
     maxAge: -1,
     path: "/",
   });
