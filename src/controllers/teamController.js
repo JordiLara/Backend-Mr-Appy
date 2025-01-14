@@ -3,7 +3,13 @@ import User from "../models/userModel.js";
 
 export const getTeam = async (req, res) => {
   try {
-    const team = await Team.findByPk(req.user.id_team);
+    const { id_team } = req.params;
+    let team = null;
+    if (id_team) {
+      team = await Team.findByPk(id_team);
+    } else {
+      team = await Team.findByPk(req.user.id_team);
+    }
     if (!team) {
       return res.status(401).json({
         code: -70,
@@ -38,7 +44,7 @@ export const getTeamMembers = async (req, res) => {
     res.status(200).json({
       code: 1,
       message: "Team Members",
-      users: teamMembers
+      users: teamMembers,
     });
   } catch (error) {
     console.error(error);
@@ -48,4 +54,3 @@ export const getTeamMembers = async (req, res) => {
     });
   }
 };
-
