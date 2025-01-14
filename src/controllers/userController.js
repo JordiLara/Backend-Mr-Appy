@@ -12,7 +12,7 @@ export const getUser = async (req, res) => {
       surname: req.user.surname,
       photo: req.user.photo,
       roles: req.user.roles,
-      employeeRole: req.user.employeeRole,
+      employee_role: req.user.employee_role,
       created_at: req.user.created_at,
       updated_at: req.user.updated_at,
     };

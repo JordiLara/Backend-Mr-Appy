@@ -29,7 +29,7 @@ const User = sequelize.define(
       type: DataTypes.STRING(50),
       allowNull: false,
     },
-    employeeRole: {
+    employee_role: {
       type: DataTypes.STRING(50),
       allowNull: false,
     },

@@ -63,7 +63,7 @@ export const register = async (req, res) => {
       password: hashedPassword,
       name,
       surname,
-      employeeRole,
+      employee_role: employeeRole,
       status: 1,
       roles: id_team ? "user" : "manager",
     });
