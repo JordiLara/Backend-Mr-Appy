@@ -29,7 +29,7 @@ export const register = async (req, res) => {
       employeeRole,
       companyName,
       teamName,
-      teamId,
+      id_team,
     } = req.body;
 
     // Verificar si ya existe un usuario con el mismo correo electrónico
@@ -42,8 +42,8 @@ export const register = async (req, res) => {
     }
 
     // Si es un empleado, verificar que el equipo existe antes de crear el usuario
-    if (teamId) {
-      const existingTeam = await Team.findOne({ where: { id_team: teamId } });
+    if (id_team) {
+      const existingTeam = await Team.findOne({ where: { id_team: id_team } });
       if (!existingTeam) {
         return res.status(404).json({
           code: -3,
@@ -65,14 +65,14 @@ export const register = async (req, res) => {
       surname,
       employeeRole,
       status: 1,
-      roles: teamId ? "user" : "manager",
+      roles: id_team ? "user" : "manager",
     });
 
     let createdUser = await newUser.save();
 
     // Si es un empleado uniéndose a un equipo existente
-    if (teamId) {
-      createdUser.id_team = teamId;
+    if (id_team) {
+      createdUser.id_team = id_team;
     }
     // Si es un manager creando un nuevo equipo
     else {
