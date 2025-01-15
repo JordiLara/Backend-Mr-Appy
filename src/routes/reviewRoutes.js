@@ -1,6 +1,6 @@
 // src/routes/userRoutes.js
 import { Router } from "express";
-import { createReview, getReviews, GetTeamReviews } from "../controllers/reviewController.js";
+import { createReview, getReviews, getTeamReviews } from "../controllers/reviewController.js";
 import { authenticateToken } from "../middlewares/authenticateToken.js";
 
 const router = Router();
