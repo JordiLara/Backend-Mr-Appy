@@ -17,7 +17,6 @@ export const createReview = async (req, res) => {
 
     let createdReview = await newReview.save();
 
-    // Enviar una respuesta al cliente
     res.status(200).json({
       code: 1,
       message: "Review creada correctamente",
@@ -33,20 +32,28 @@ export const createReview = async (req, res) => {
   }
 };
 
+const fetchReviews = async ({
+  filter,
+  include,
+  order = [["created_at", "DESC"]],
+}) => {
+  return await Review.findAll({
+    where: filter,
+    include,
+    order,
+  });
+};
+
 export const getReviews = async (req, res) => {
   try {
-    const reviews = await Review.findAll({
-      where: {
-        id_user: req.user.id_user,
-      },
-      order: [["created_at", "DESC"]],
+    const reviews = await fetchReviews({
+      filter: { id_user: req.user.id_user },
     });
 
-    // Enviar una respuesta al cliente
     res.status(200).json({
       code: 1,
       message: "Lista de reviews",
-      reviews: reviews,
+      reviews,
     });
   } catch (error) {
     console.error(error);
@@ -68,15 +75,14 @@ export const getTeamReviews = async (req, res) => {
       });
     }
 
-    const reviews = await Review.findAll({
-      where: { id_team },
+    const reviews = await fetchReviews({
+      filter: { id_team },
       include: [
         {
           model: User,
           attributes: ["name", "surname"],
         },
       ],
-      order: [["created_at", "DESC"]],
     });
     res.status(200).json({
       code: 1,
