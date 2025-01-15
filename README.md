@@ -114,8 +114,7 @@ src/
 ### **Pasos para Instalar**
 1. Clonar el repositorio:
    ```bash
-   git clone https://github.com/usuario/mrappy-backend.git
-   cd mrappy-backend
+   git clone (https://github.com/JordiLara/ITACADEMY-9.1-Backend-Ending-Project-Mr-Appy.git)
    ```
 2. Instalar dependencias:
    ```bash
@@ -133,7 +132,7 @@ src/
 
 5. Ejecutar el servidor:
    ```bash
-   npm start
+   npm run start
    ```
 6. El servidor estará disponible en:
    ```
