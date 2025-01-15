@@ -1,6 +1,6 @@
 import { Router } from "express";
 import {getMoodEntries} from "../controllers/calendarController.js"
-import { authenticateToken } from "../middlewares/authenticateToken";
+import { authenticateToken } from "../middlewares/authenticateToken.js";
 
 const router = Router();
 

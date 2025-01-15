@@ -7,6 +7,7 @@ import userRoutes from "./routes/userRoutes.js";
 import teamRoutes from "./routes/teamRoutes.js";
 import testRoutes from "./routes/testRoutes.js";
 import reviewRoutes from "./routes/reviewRoutes.js";
+import calendarRoutes from "./routes/calendarRoutes.js"
 import { testConnection } from "./db.js";
 import dotenv from "dotenv";
 
@@ -42,6 +43,7 @@ app.use("/auth", authRoutes);
 app.use("/user", userRoutes);
 app.use("/team", teamRoutes);
 app.use("/review", reviewRoutes);
+app.use("/calendar", calendarRoutes);
 app.use("/test", testRoutes);
 
 // Iniciar el servidor
