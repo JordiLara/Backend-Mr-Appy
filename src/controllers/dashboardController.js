@@ -2,7 +2,6 @@ import Review from "../models/reviewModel.js";
 import User from "../models/userModel.js";
 import Team from "../models/teamModel.js";
 
-// Obtener estadísticas de estados de ánimo
 export const getMoodStatistics = async (req, res) => {
   try {
     const id_team = req.user.id_team;
@@ -18,6 +17,14 @@ export const getMoodStatistics = async (req, res) => {
       where: { id_team },
       attributes: ["mood"],
     });
+
+    if (moodStats.length === 0) {
+      return res.status(200).json({
+        code: 1,
+        message: "No hay datos de estados de ánimo disponibles",
+        data: {},
+      });
+    }
 
     const moodDistribution = moodStats.reduce((acc, review) => {
       acc[review.mood] = (acc[review.mood] || 0) + 1;
@@ -39,7 +46,6 @@ export const getMoodStatistics = async (req, res) => {
   }
 };
 
-// Obtener reseñas recientes
 export const getRecentReviews = async (req, res) => {
   try {
     const id_team = req.user.id_team;
@@ -63,6 +69,14 @@ export const getRecentReviews = async (req, res) => {
       limit: 5,
     });
 
+    if (reviews.length === 0) {
+      return res.status(200).json({
+        code: 1,
+        message: "No hay reseñas recientes disponibles",
+        reviews: [],
+      });
+    }
+
     res.status(200).json({
       code: 1,
       message: "Reseñas recientes obtenidas correctamente",
@@ -78,7 +92,6 @@ export const getRecentReviews = async (req, res) => {
   }
 };
 
-// Obtener actividad reciente del equipo
 export const getTeamActivity = async (req, res) => {
   try {
     const id_team = req.user.id_team;
@@ -96,6 +109,14 @@ export const getTeamActivity = async (req, res) => {
       order: [["created_at", "DESC"]],
       limit: 10,
     });
+
+    if (activity.length === 0) {
+      return res.status(200).json({
+        code: 1,
+        message: "No hay actividad reciente disponible",
+        activity: [],
+      });
+    }
 
     res.status(200).json({
       code: 1,

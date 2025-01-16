@@ -3,8 +3,8 @@ import {
   getMoodStatistics,
   getRecentReviews,
   getTeamActivity,
-} from "../controllers/dasboardController.js";
-import { authenticateToken } from "../middlewares/authenticateToken";
+} from "../controllers/dashboardController.js";
+import { authenticateToken } from "../middlewares/authenticateToken.js";
 
 const router = Router();
 
