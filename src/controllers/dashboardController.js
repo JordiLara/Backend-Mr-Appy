@@ -132,3 +132,31 @@ export const getTeamActivity = async (req, res) => {
     });
   }
 };
+
+export const getTeamSize = async (req, res) => {
+  try {
+    const id_team = req.user.id_team;
+
+    if (!id_team) {
+      return res.status(400).json({
+        code: -1,
+        message: "El usuario no tiene un equipo asociado",
+      });
+    }
+
+    const totalMembers = await User.count({ where: { id_team } });
+
+    res.status(200).json({
+      code: 1,
+      totalMembers,
+      message: "Tamaño del equipo obtenido correctamente",
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      code: -100,
+      message: "Error al obtener el tamaño del equipo",
+      error,
+    });
+  }
+};
