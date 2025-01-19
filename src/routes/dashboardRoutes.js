@@ -3,7 +3,7 @@ import {
   getMoodStatistics,
   getRecentReviews,
   getTeamActivity,
-  getTeamSize
+  getTeamSize,
 } from "../controllers/dashboardController.js";
 import { authenticateToken } from "../middlewares/authenticateToken.js";
 

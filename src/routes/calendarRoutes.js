@@ -1,5 +1,5 @@
 import { Router } from "express";
-import {getReviewEntries} from "../controllers/calendarController.js"
+import { getReviewEntries } from "../controllers/calendarController.js";
 import { authenticateToken } from "../middlewares/authenticateToken.js";
 
 const router = Router();
