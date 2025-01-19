@@ -25,6 +25,7 @@ app.use(
       "http://localhost:5173",
       "http://localhost:4200",
       "http://localhost:5174",
+      process.env.CLIENT_URL,
     ],
   })
 );
@@ -51,6 +52,6 @@ app.use("/api", statsRoutes);
 app.use("/test", testRoutes);
 
 // Iniciar el servidor
-app.listen(3000, () => {
-  console.log("Servidor iniciado en el puerto 3000");
+app.listen(process.env.PORT, () => {
+  console.log("Servidor iniciado en el puerto " + process.env.PORT);
 });
