@@ -6,4 +6,4 @@ const router = Router();
 
 router.get("/stats", authenticateToken(["user"]), getUserStats);
 
-export default Router;
+export default router;
