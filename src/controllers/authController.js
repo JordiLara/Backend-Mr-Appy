@@ -140,7 +140,7 @@ export const login = async (req, res) => {
     if (!user) {
       return res.status(401).json({
         code: -25,
-        message: "user No exist",
+        message: "El usuario no existe",
       });
     }
 
