@@ -114,7 +114,7 @@ src/
 ### **Pasos para Instalar**
 1. Clonar el repositorio:
    ```bash
-   git clone (https://github.com/JordiLara/ITACADEMY-9.1-Backend-Ending-Project-Mr-Appy.git)
+   git clone https://github.com/JordiLara/Backend-Mr-Appy.git
    ```
 2. Instalar dependencias:
    ```bash
